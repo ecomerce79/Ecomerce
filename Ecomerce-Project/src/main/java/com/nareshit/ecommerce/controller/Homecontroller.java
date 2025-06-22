@@ -1,17 +1,34 @@
 package com.nareshit.ecommerce.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.security.Principal;
 
-@RestController
-@RequestMapping("/ecommerce")
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
 public class Homecontroller {
 
-    @GetMapping("/get")
-    public ResponseEntity<String> getDetails(){
-        return ResponseEntity.ok("hello World") ;
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/login";
     }
 
+    @GetMapping("/welcome")
+    public String welcome(Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        return "welcome";
+    }
+
+    @GetMapping("/admin")
+    public String adminPage(Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        return "admin";
+    }
+
+    @GetMapping("/user")
+    public String userPage(Model model, Principal principal) {
+        model.addAttribute("username", principal.getName());
+        return "user";
+    }
 }
